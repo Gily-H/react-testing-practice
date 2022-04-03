@@ -1,5 +1,6 @@
+import { toBeChecked } from "@testing-library/jest-dom/dist/matchers";
 import { render, screen, fireEvent } from "@testing-library/react";
-import App from "./App";
+import App, { replaceCamelWithSpaces } from "./App";
 
 test("button has correct initial color", () => {
   render(<App />);
@@ -93,4 +94,18 @@ test("button should be gray when disabled and blue when enabled", () => {
 
   // expect button to be blue
   expect(colorButton).toHaveStyle({ backgroundColor: "blue" });
+});
+
+describe("spaces before camel-case capital letters", () => {
+  test("Works for no innter capital letters", () => {
+    expect(replaceCamelWithSpaces("Red")).toBe("Red");
+  });
+
+  test("Works for one inner capital letter", () => {
+    expect(replaceCamelWithSpaces("MidnightBlue")).toBe("Midnight Blue");
+  });
+
+  test("Works for multiple inner capital letters", () => {
+    expect(replaceCamelWithSpaces("UltraVioletBlue")).toBe("Ultra Violet Blue");
+  });
 });
