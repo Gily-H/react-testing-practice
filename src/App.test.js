@@ -23,12 +23,12 @@ test("button has correct initial color", () => {
 test("initial conditions", () => {
   render(<App />);
 
-  // cbutton starts enabled
+  // button starts enabled
   const colorButton = screen.getByRole("button", { name: "Change to blue" });
   expect(colorButton).toBeEnabled();
 
-  // checkbox is unchecked
-  const checkbox = screen.getByRole("checkbox");
+  // checkbox starts unchecked
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
   expect(checkbox).not.toBeChecked();
 });
 
@@ -49,4 +49,48 @@ test("checkbox disables button on first click and enables button on second click
 
   // button should be enabled
   expect(colorButton).toBeEnabled();
+});
+
+test("button should be gray when disabled and red when enabled", () => {
+  render(<App />);
+
+  const colorButton = screen.getByRole("button", { name: "Change to blue" });
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
+
+  // disable button on checkbox click
+  fireEvent.click(checkbox);
+
+  // expect button to be grey
+  expect(colorButton).toHaveStyle({ backgroundColor: "gray" });
+
+  // enable button on checkbox click
+  fireEvent.click(checkbox);
+
+  // expect button to be red
+  expect(colorButton).toHaveStyle({ backgroundColor: "red" });
+});
+
+test("button should be gray when disabled and blue when enabled", () => {
+  render(<App />);
+
+  const colorButton = screen.getByRole("button", { name: "Change to blue" });
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
+
+  // change button color with click
+  fireEvent.click(colorButton);
+
+  // expect button to be blue
+  expect(colorButton).toHaveStyle({ backgroundColor: "blue" });
+
+  // disable button on checkbox click
+  fireEvent.click(checkbox);
+
+  // expect button to be gray
+  expect(colorButton).toHaveStyle({ backgroundColor: "gray" });
+
+  // enable button on checkbox click
+  fireEvent.click(checkbox);
+
+  // expect button to be blue
+  expect(colorButton).toHaveStyle({ backgroundColor: "blue" });
 });
