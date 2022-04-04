@@ -1,4 +1,3 @@
-import { toBeChecked } from "@testing-library/jest-dom/dist/matchers";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App, { replaceCamelWithSpaces } from "./App";
 
